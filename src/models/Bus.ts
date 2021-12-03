@@ -2,7 +2,6 @@ import {BusType} from "./BusType";
 import {BusSeating} from "./BusSeating";
 
 export interface Bus {
-    busId: string;
     companyId: string;
     to: string;
     from: string;

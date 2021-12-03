@@ -4,9 +4,6 @@ import {BusType} from "./BusType";
 import {BusSeating} from "./BusSeating";
 
 const schema = new Schema<Bus>({
-    busId: {
-        type: "string", required: true
-    },
     companyId: {
         type: "string", required: true
     },
