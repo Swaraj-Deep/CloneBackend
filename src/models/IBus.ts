@@ -1,7 +1,7 @@
-import {BusType} from "./BusType";
-import {BusSeating} from "./BusSeating";
+import {BusType} from "./types/BusType";
+import {BusSeating} from "./types/BusSeating";
 
-export interface Bus {
+export interface IBus {
     companyId: string;
     to: string;
     from: string;
