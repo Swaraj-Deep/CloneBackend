@@ -1,11 +1,10 @@
-import {Schema} from "mongoose";
+import {Schema, Types} from "mongoose";
 import {IBus} from "./IBus";
 import {BusType} from "./types/BusType";
 import {BusSeating} from "./types/BusSeating";
-import mongoose from "mongoose";
 
 const busSchema = new Schema<IBus>({
-    _id: mongoose.Types.ObjectId,
+    _id: Types.ObjectId,
     companyId: {
         type: "string",
         required: true,
