@@ -5,8 +5,8 @@ import {postBus} from "./postBus";
 const router: Router = express.Router();
 router.use(express.json());
 
-router.get("/buses", getAllBuses);
-router.get("/buses/:id", getSingleBus);
+router.get("/", getAllBuses);
+router.get("/:id", getSingleBus);
 router.post("/newBus", postBus);
 router.patch("/updateBus/:id", (req, res, next) => {
 });

@@ -1,30 +1,35 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, {Application, Request, Response, NextFunction} from "express";
 import busController from './routes/bus/busController';
 import dotenv from "dotenv";
+import ErrorHandler from "./errorHandling/errorHandler";
+import sendResponse from "./shared/sendResponse";
 
 dotenv.config();
 const app: Application = express();
 const PORT: number = parseInt(process.env.PORT || "3000");
 
-app.use('/bus', busController);
+app.use('/buses', busController);
 
 app.get("/", async (req: Request, res: Response, next: NextFunction) => {
-//   const conn = connectToDB(process.env.CONNECTION_STRING!);
-//   const model = conn.model("Bus", BusSchema);
-//   await model.create({
-//     from: "sf",
-//     to: "sf",
-//     companyId: "s",
-//     busType: BusType.AC,
-//     seatingArrangement: BusSeating.SITTING,
-//     fare: "12",
-//     timings: [new Date()],
-//   });
-  res.status(200).json({
-    message: "Ok!",
-  });
+    res.status(200).json({
+        message: "Ok!",
+    });
+});
+
+app.use((err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
+    const errMessage: {
+        statusCode: number,
+        message: string
+    } = JSON.parse(err.message);
+    sendResponse<{
+        message: string;
+        path: string;
+    }>(res, errMessage.statusCode, {
+        message: errMessage.message,
+        path: req.path
+    }, "Error occurred. Check data for more information.");
 });
 
 app.listen(PORT, () => {
-  console.log(`Server Started on PORT ${PORT}`);
+    console.log(`Server Started on PORT ${PORT}`);
 });
