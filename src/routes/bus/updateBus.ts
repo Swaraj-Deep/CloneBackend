@@ -18,6 +18,7 @@ export async function updateBus(req: Request, res: Response, next: NextFunction)
         });
         if (!updatedBus) {
             next(new ErrorHandler(404, `No resource found with id = ${id}`));
+            return;
         }
         sendResponse(res, 200, updatedBus);
     } catch (err: any) {
