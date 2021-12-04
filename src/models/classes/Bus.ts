@@ -8,13 +8,13 @@ export default class Bus implements IBus {
     _id!: ObjectId;
     busType!: BusType;
     companyId!: string;
-    fare!: string;
+    fare!: number;
     from!: string;
     seatingArrangement!: BusSeating;
     timings!: Date[];
     to!: string;
 
-    constructor(busType: BusType, companyId: string, fare: string, from: string, seatingArrangement: BusSeating, timings: Date[], to: string) {
+    constructor(busType: BusType, companyId: string, fare: number, from: string, seatingArrangement: BusSeating, timings: Date[], to: string) {
         if (busType) {
             this.busType = busType;
         } else {

@@ -33,7 +33,7 @@ const busSchema = new Schema<IBus>({
     required: true,
   },
   fare: {
-    type: "string",
+    type: "number",
     required: true,
   },
 });

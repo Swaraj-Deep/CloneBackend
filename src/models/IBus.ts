@@ -10,5 +10,5 @@ export interface IBus {
     busType: BusType;
     seatingArrangement: BusSeating;
     timings: Date[];
-    fare: string;
+    fare: number;
 }
