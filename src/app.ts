@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction, Router } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import busController from './routes/bus/busController';
 import dotenv from "dotenv";
 
