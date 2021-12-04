@@ -1,8 +1,7 @@
-import {Schema, Types} from "mongoose";
+import {Schema} from "mongoose";
 import {ICompany} from "./ICompany";
 
 const companySchema = new Schema<ICompany>({
-    _id: Types.ObjectId,
     companyName: {
         type: "string",
         required: true

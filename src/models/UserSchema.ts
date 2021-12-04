@@ -1,8 +1,7 @@
-import {Schema, Types} from "mongoose";
+import {Schema} from "mongoose";
 import {IUser} from "./IUser";
 
 const userSchema = new Schema<IUser>({
-    _id: Types.ObjectId,
     userName: {
         type: "string",
         required: true

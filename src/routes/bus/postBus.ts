@@ -6,6 +6,7 @@ import BusSchema from "../../models/BusSchema";
 import Bus from "../../models/classes/Bus";
 import connectToDB from "../../database/connectToDB";
 import ErrorHandler from "../../errorHandling/errorHandler";
+import sendResponse from "../../shared/sendResponse";
 
 export async function postBus(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
@@ -14,7 +15,7 @@ export async function postBus(req: Request, res: Response, next: NextFunction) {
         const {busType, companyId, fare, from, seatingArrangement, timings, to, totalSeats, remainingSeats} = req.body;
         const busFromUI: IBus = new Bus(busType, companyId, fare, from, seatingArrangement, timings, to, totalSeats, remainingSeats);
         const createdBus: IBus = await createResource(dbConnection, 'Bus', BusSchema, busFromUI);
-        res.status(201).json(createdBus);
+        sendResponse(res, 201, createdBus);
     } catch (err: any) {
         if (err instanceof ErrorHandler) {
             next(err);

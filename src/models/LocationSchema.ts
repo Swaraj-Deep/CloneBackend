@@ -1,8 +1,7 @@
-import {Schema, Types} from "mongoose";
+import {Schema} from "mongoose";
 import {ILocation} from "./ILocation";
 
 const locationSchema = new Schema<ILocation>({
-    _id: Types.ObjectId,
     streetName: {
         type: "string",
         required: true
