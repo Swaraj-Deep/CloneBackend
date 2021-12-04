@@ -5,6 +5,7 @@ import ErrorHandler from "./errorHandling/errorHandler";
 import sendResponse from "./shared/sendResponse";
 import userController from "./routes/user/userController";
 import locationController from "./routes/location/locationController";
+import companyController from "./routes/company/companyController";
 
 dotenv.config();
 const app: Application = express();
@@ -13,6 +14,7 @@ const PORT: number = parseInt(process.env.PORT || "3000");
 app.use('/buses', busController);
 app.use('/users', userController);
 app.use('/locations', locationController);
+app.use('/companies', companyController);
 
 app.get("/", async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({
