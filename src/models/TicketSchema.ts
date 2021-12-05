@@ -21,6 +21,14 @@ const ticketSchema = new Schema<ITicket>({
     userId: {
         type: "string",
         required: true
+    },
+    to: {
+        type: "string",
+        required: true
+    },
+    from: {
+        type: "string",
+        required: true
     }
 });
 

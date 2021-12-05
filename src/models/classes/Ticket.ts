@@ -8,8 +8,10 @@ export class Ticket implements ITicket {
     seatNumbers!: number[];
     timeOfJourney!: Date;
     userId!: string;
+    from!: string;
+    to!: string;
 
-    constructor(busId: string, dateOfJourney: Date, seatNumbers: number[], timeOfJourney: Date, userId: string) {
+    constructor(busId: string, dateOfJourney: Date, seatNumbers: number[], timeOfJourney: Date, userId: string, from: string, to: string) {
         if (busId !== undefined) {
             this.busId = busId;
         } else {
@@ -32,6 +34,16 @@ export class Ticket implements ITicket {
         }
         if (userId !== undefined) {
             this.userId = userId;
+        } else {
+            throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+        }
+        if (to !== undefined) {
+            this.to = to;
+        } else {
+            throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+        }
+        if (from !== undefined) {
+            this.from = from;
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }

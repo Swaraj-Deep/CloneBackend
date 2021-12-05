@@ -6,6 +6,7 @@ import sendResponse from "./shared/sendResponse";
 import userController from "./routes/user/userController";
 import locationController from "./routes/location/locationController";
 import companyController from "./routes/company/companyController";
+import ticketController from "./routes/ticket/ticketController";
 
 dotenv.config();
 const app: Application = express();
@@ -15,6 +16,7 @@ app.use('/buses', busController);
 app.use('/users', userController);
 app.use('/locations', locationController);
 app.use('/companies', companyController);
+app.use('/tickets', ticketController);
 
 app.get("/", async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({
