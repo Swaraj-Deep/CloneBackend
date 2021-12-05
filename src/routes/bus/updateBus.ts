@@ -17,7 +17,7 @@ export async function updateBus(req: Request, res: Response, next: NextFunction)
             busType, companyId, fare, from, seatingArrangement, timings, to, totalSeats, remainingSeats
         });
         if (!updatedBus) {
-            next(new ErrorHandler(404, `No resource found with id = ${id}`));
+            next(new ErrorHandler(404, `No Resource found with id = ${id}`));
             return;
         }
         sendResponse(res, 200, updatedBus);

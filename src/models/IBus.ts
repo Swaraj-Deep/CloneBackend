@@ -1,9 +1,8 @@
-import {ObjectId} from 'mongoose';
 import {BusType} from "./types/BusType";
 import {BusSeating} from "./types/BusSeating";
 
 export interface IBus {
-    _id: ObjectId;
+    _id: string;
     companyId: string;
     to: string;
     from: string;

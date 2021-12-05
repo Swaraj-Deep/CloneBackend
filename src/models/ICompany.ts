@@ -1,7 +1,5 @@
-import {ObjectId} from "mongoose";
-
 export interface ICompany {
-    _id: ObjectId;
+    _id: string;
     companyName: string;
     registrationNumber: string;
     gstIN: string;

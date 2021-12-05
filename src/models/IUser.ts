@@ -1,7 +1,5 @@
-import {ObjectId} from "mongoose";
-
 export interface IUser {
-    _id: ObjectId;
+    _id: string;
     userName: string;
     dob: Date;
     email: string;

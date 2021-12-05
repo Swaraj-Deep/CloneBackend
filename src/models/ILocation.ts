@@ -1,7 +1,5 @@
-import {ObjectId} from "mongoose";
-
 export interface ILocation {
-    _id: ObjectId;
+    _id: string;
     streetName: string;
     district: string;
     state: string;
