@@ -32,7 +32,11 @@ export class Company implements ICompany {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
         if (rating !== undefined) {
-            this.rating = rating;
+            try {
+                this.rating = parseInt(String(rating));
+            } catch (err) {
+                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+            }
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }

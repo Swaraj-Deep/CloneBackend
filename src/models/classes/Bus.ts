@@ -14,7 +14,11 @@ export default class Bus implements IBus {
 
     constructor(busType: number, companyId: string, fare: number, from: string, timings: Date[], to: string, totalSeats: number, remainingSeats: number) {
         if (busType !== undefined) {
-            this.busType = busType;
+            try {
+                this.busType = parseInt(String(busType));
+            } catch (err) {
+                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+            }
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
@@ -24,7 +28,11 @@ export default class Bus implements IBus {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
         if (fare !== undefined) {
-            this.fare = fare;
+            try {
+                this.fare = parseInt(String(fare));
+            } catch (err) {
+                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+            }
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
@@ -44,12 +52,20 @@ export default class Bus implements IBus {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
         if (totalSeats !== undefined) {
-            this.totalSeats = totalSeats;
+            try {
+                this.totalSeats = parseInt(String(totalSeats));
+            } catch (err) {
+                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+            }
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
         if (remainingSeats !== undefined) {
-            this.remainingSeats = remainingSeats;
+            try {
+                this.remainingSeats = parseInt(String(remainingSeats));
+            } catch (err) {
+                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+            }
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
