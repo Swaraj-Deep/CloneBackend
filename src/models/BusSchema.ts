@@ -18,7 +18,7 @@ const busSchema = new Schema<IBus>({
     busType: {
         type: "number",
         required: true,
-        enum: [BusType.AC, BusType.NON_AC],
+        enum: BusType,
     },
     timings: {
         type: [Date],
