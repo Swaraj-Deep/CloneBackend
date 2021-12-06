@@ -1,7 +1,6 @@
 import {Schema} from "mongoose";
 import {IBus} from "./IBus";
 import {BusType} from "./types/BusType";
-import {BusSeating} from "./types/BusSeating";
 
 const busSchema = new Schema<IBus>({
     companyId: {
@@ -20,11 +19,6 @@ const busSchema = new Schema<IBus>({
         type: "number",
         required: true,
         enum: [BusType.AC, BusType.NON_AC],
-    },
-    seatingArrangement: {
-        type: "number",
-        required: true,
-        enum: [BusSeating.SITTING, BusSeating.MIXED, BusSeating.SLEEPER],
     },
     timings: {
         type: [Date],
