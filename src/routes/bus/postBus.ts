@@ -12,8 +12,8 @@ export async function postBus(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
         dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
-        const {busType, companyId, fare, from, timings, to, totalSeats, remainingSeats} = req.body;
-        const busFromUI: IBus = new Bus(busType, companyId, fare, from, timings, to, totalSeats, remainingSeats);
+        const {companyId, fare, from, timings, to, totalSeats, remainingSeats} = req.body;
+        const busFromUI: IBus = new Bus(companyId, fare, from, timings, to, totalSeats, remainingSeats);
         console.log(busFromUI);
         const createdBus: IBus = await createResource(dbConnection, 'Bus', BusSchema, busFromUI);
         sendResponse(res, 201, createdBus);

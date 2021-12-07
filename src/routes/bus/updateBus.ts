@@ -11,10 +11,10 @@ export async function updateBus(req: Request, res: Response, next: NextFunction)
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        const {busType, companyId, fare, from, timings, to, totalSeats, remainingSeats} = req.body;
+        const {companyId, fare, from, timings, to, totalSeats, remainingSeats} = req.body;
         dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const updatedBus: IBus | null = await updateResource(dbConnection, 'Bus', BusSchema, id, {
-            busType, companyId, fare, from, timings, to, totalSeats, remainingSeats
+            companyId, fare, from, timings, to, totalSeats, remainingSeats
         });
         if (!updatedBus) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

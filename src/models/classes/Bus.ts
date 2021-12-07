@@ -3,7 +3,6 @@ import ErrorHandler from "../../errorHandling/errorHandler";
 
 export default class Bus implements IBus {
     _id!: string;
-    busType!: number;
     companyId!: string;
     fare!: number;
     from!: string;
@@ -12,16 +11,7 @@ export default class Bus implements IBus {
     totalSeats!: number;
     remainingSeats!: number;
 
-    constructor(busType: number, companyId: string, fare: number, from: string, timings: Date[], to: string, totalSeats: number, remainingSeats: number) {
-        if (busType !== undefined) {
-            try {
-                this.busType = parseInt(String(busType));
-            } catch (err) {
-                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
-            }
-        } else {
-            throw new ErrorHandler(400, 'Request Body does not match the internal interface');
-        }
+    constructor(companyId: string, fare: number, from: string, timings: Date[], to: string, totalSeats: number, remainingSeats: number) {
         if (companyId !== undefined) {
             this.companyId = companyId;
         } else {
