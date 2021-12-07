@@ -12,7 +12,7 @@ export async function getRemainingSeats(req: Request, res: Response, next: NextF
     try {
         const id = req.params.id;
         dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
-        const remainingSeats: IBus[] = await viewWithFilter<IBus>(dbConnection, 'Bus', BusSchema, {
+        const remainingSeatsArr: IBus[] = await viewWithFilter<IBus>(dbConnection, 'Bus', BusSchema, {
             _id: id,
         }, {
             _id: false,
@@ -22,10 +22,13 @@ export async function getRemainingSeats(req: Request, res: Response, next: NextF
             busType: false,
             timings: false,
             fare: false,
-            totalSeats: false,
-            remainingSeats: true
+            totalSeats: false
         });
-        sendResponse(res, 200, remainingSeats);
+        if (remainingSeatsArr.length === 0) {
+            next(new ErrorHandler(404, `No Resource found with id = ${id}`));
+            return;
+        }
+        sendResponse(res, 200, remainingSeatsArr[0].remainingSeats);
     } catch (err: any) {
         next(new ErrorHandler(500, err.message));
     } finally {
