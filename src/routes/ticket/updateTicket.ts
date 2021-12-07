@@ -12,9 +12,9 @@ export async function updateTicket(req: Request, res: Response, next: NextFuncti
     try {
         dbConnection = connectToDB(process.env.CONNECTION_STRING!);
         const id: string = req.params.id;
-        const {seatNumbers, to, from} = req.body;
+        const {seatNumbers, to, from, isTicketCancelled} = req.body;
         const updatedTicket: ITicket | null = await updateResource<ITicket>(dbConnection, 'Ticket', TicketSchema, id, {
-            seatNumbers, to, from
+            seatNumbers, to, from, isTicketCancelled
         });
         if (!updatedTicket) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

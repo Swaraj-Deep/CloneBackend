@@ -7,4 +7,5 @@ export interface ITicket {
     from: string;
     dateOfJourney: Date;
     timeOfJourney: Date;
+    isTicketCancelled: boolean;
 }

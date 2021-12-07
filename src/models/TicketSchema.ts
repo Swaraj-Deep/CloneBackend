@@ -29,6 +29,11 @@ const ticketSchema = new Schema<ITicket>({
     from: {
         type: "string",
         required: true
+    },
+    isTicketCancelled: {
+        type: "boolean",
+        required: true,
+        default: false
     }
 });
 

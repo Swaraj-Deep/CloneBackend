@@ -10,8 +10,9 @@ export class Ticket implements ITicket {
     userId!: string;
     from!: string;
     to!: string;
+    isTicketCancelled!: boolean;
 
-    constructor(busId: string, dateOfJourney: Date, seatNumbers: number[], timeOfJourney: Date, userId: string, from: string, to: string) {
+    constructor(busId: string, dateOfJourney: Date, seatNumbers: number[], timeOfJourney: Date, userId: string, from: string, to: string, isTicketCancelled: boolean) {
         if (busId !== undefined) {
             this.busId = busId;
         } else {
@@ -44,6 +45,11 @@ export class Ticket implements ITicket {
         }
         if (from !== undefined) {
             this.from = from;
+        } else {
+            throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+        }
+        if (isTicketCancelled) {
+            this.isTicketCancelled = isTicketCancelled;
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
