@@ -27,7 +27,7 @@ export class BusLayout implements IBusLayout {
         }
         if (differenceInFare !== undefined) {
             try {
-                this.differenceInFare = parseInt(String(differenceInFare));
+                this.differenceInFare = parseFloat(String(differenceInFare));
             } catch (err) {
                 throw new ErrorHandler(400, 'Request Body does not match the internal interface');
             }

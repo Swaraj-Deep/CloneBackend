@@ -29,7 +29,7 @@ export default class Bus implements IBus {
         }
         if (fare !== undefined) {
             try {
-                this.fare = parseInt(String(fare));
+                this.fare = parseFloat(String(fare));
             } catch (err) {
                 throw new ErrorHandler(400, 'Request Body does not match the internal interface');
             }
