@@ -9,8 +9,9 @@ export class BusLayout implements IBusLayout {
     numberOfRows!: number;
     seatCountingStrategy!: number;
     seatingArrangement!: number;
+    busType!: number;
 
-    constructor(cabinSeats: string[], columnArrangement: number, differenceInFare: number, numberOfRows: number, seatCountingStrategy: number, seatingArrangement: number) {
+    constructor(cabinSeats: string[], columnArrangement: number, differenceInFare: number, numberOfRows: number, seatCountingStrategy: number, seatingArrangement: number, busType: number) {
         if (cabinSeats !== undefined) {
             this.cabinSeats = cabinSeats;
         } else {
@@ -55,6 +56,15 @@ export class BusLayout implements IBusLayout {
         if (seatCountingStrategy !== undefined) {
             try {
                 this.seatCountingStrategy = parseInt(String(seatCountingStrategy));
+            } catch (err) {
+                throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+            }
+        } else {
+            throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+        }
+        if (busType !== undefined) {
+            try {
+                this.busType = parseInt(String(busType));
             } catch (err) {
                 throw new ErrorHandler(400, 'Request Body does not match the internal interface');
             }

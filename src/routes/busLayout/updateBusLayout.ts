@@ -18,16 +18,17 @@ export async function updateBusLayout(req: Request, res: Response, next: NextFun
             differenceInFare,
             numberOfRows,
             seatCountingStrategy,
-            seatingArrangement
+            seatingArrangement,
+            busType
         } = req.body;
         const updatedBusLayout: IBusLayout | null = await updateResource(dbConnection, 'BusLayout', BusLayoutSchema, id, {
-
             cabinSeats,
             columnArrangement,
             differenceInFare,
             numberOfRows,
             seatCountingStrategy,
-            seatingArrangement
+            seatingArrangement,
+            busType
         });
         if (!updatedBusLayout) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

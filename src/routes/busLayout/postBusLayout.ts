@@ -18,9 +18,10 @@ export async function postBusLayout(req: Request, res: Response, next: NextFunct
             differenceInFare,
             numberOfRows,
             seatCountingStrategy,
-            seatingArrangement
+            seatingArrangement,
+            busType
         } = req.body;
-        const busLayoutFromUI = new BusLayout(cabinSeats, columnArrangement, differenceInFare, numberOfRows, seatCountingStrategy, seatingArrangement);
+        const busLayoutFromUI = new BusLayout(cabinSeats, columnArrangement, differenceInFare, numberOfRows, seatCountingStrategy, seatingArrangement, busType);
         const createdBusLayout: IBusLayout = await createResource<IBusLayout>(dbConnection, 'BusLayout', BusLayoutSchema, busLayoutFromUI);
         sendResponse(res, 201, createdBusLayout);
     } catch (err: any) {

@@ -3,6 +3,7 @@ import {IBusLayout} from "./IBusLayout";
 import {BusSeating} from "./types/BusSeating";
 import {BusColumn} from "./types/BusColumn";
 import {BusSeatCounting} from "./types/BusSeatCounting";
+import {BusType} from "./types/BusType";
 
 const busLayoutSchema = new Schema<IBusLayout>({
     numberOfRows: {
@@ -31,6 +32,11 @@ const busLayoutSchema = new Schema<IBusLayout>({
     differenceInFare: {
         type: "number",
         required: true
+    },
+    busType: {
+        type: "number",
+        required: true,
+        enum: BusType
     }
 });
 
