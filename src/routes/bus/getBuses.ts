@@ -11,7 +11,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function getAllBuses(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const buses: IBus[] = await viewAll<IBus>(dbConnection, 'Bus', BusSchema);
         sendResponse(res, 200, buses);
     } catch (err: any) {
