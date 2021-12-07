@@ -10,7 +10,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function getBetweenLocation(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const to: string = req.query.to as string;
         const from: string = req.query.from as string;
         const buses: IBus[] = await viewWithFilter<IBus>(dbConnection, 'Bus', BusSchema, {

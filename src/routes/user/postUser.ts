@@ -12,7 +12,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function postUser(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {userName, dob, email, address, phone, password} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const userFromUI: IUser = new User(address, dob, email, hashedPassword, phone, userName);

@@ -11,7 +11,7 @@ import viewSingle from "../../shared/viewSingle";
 export async function getAllTickets(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const tickets: ITicket[] = await viewAll<ITicket>(dbConnection, 'Ticket', TicketSchema);
         sendResponse(res, 200, tickets);
     } catch (err: any) {

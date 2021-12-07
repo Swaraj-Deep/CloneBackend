@@ -12,7 +12,7 @@ export async function updateCompany(req: Request, res: Response, next: NextFunct
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {companyName, registrationNumber, gstIN, owner, joinedPlatformOn, rating} = req.body;
         const updatedCompany: ICompany | null = await updateResource<ICompany>(dbConnection, 'Company', CompanySchema, id, {
             companyName, registrationNumber, gstIN, owner, joinedPlatformOn, rating

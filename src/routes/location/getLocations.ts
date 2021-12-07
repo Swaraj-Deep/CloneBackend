@@ -11,7 +11,7 @@ import viewSingle from "../../shared/viewSingle";
 export async function getAllLocations(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const locations: ILocation[] = await viewAll<ILocation>(dbConnection, 'Location', LocationSchema);
         sendResponse(res, 200, locations);
     } catch (err: any) {
@@ -25,7 +25,7 @@ export async function getSingleLocation(req: Request, res: Response, next: NextF
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const location: ILocation | null = await viewSingle<ILocation>(dbConnection, 'Location', LocationSchema, id);
         if (!location) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

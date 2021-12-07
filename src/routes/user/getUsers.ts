@@ -11,7 +11,7 @@ import viewSingle from "../../shared/viewSingle";
 export async function getAllUsers(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const allUsers: IUser[] = await viewAll<IUser>(dbConnection, 'User', UserSchema);
         sendResponse(res, 200, allUsers);
     } catch (err: any) {
@@ -25,7 +25,7 @@ export async function getUser(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const user: IUser | null = await viewSingle<IUser>(dbConnection, 'User', UserSchema, id);
         if (!user) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

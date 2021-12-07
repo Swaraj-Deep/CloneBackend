@@ -11,7 +11,7 @@ import ErrorHandler from "../../errorHandling/errorHandler";
 export async function postBusLayout(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {
             cabinSeats,
             columnArrangement,

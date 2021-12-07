@@ -12,7 +12,7 @@ export async function deleteLocation(req: Request, res: Response, next: NextFunc
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const deletedLocation: ILocation | null = await deleteResource<ILocation>(dbConnection, 'Location', LocationSchema, id);
         if (!deletedLocation) {
             next(new ErrorHandler(404, `No Resource found with id =${id}`));

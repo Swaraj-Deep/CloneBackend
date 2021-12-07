@@ -11,7 +11,7 @@ export async function updateUser(req: Request, res: Response, next: NextFunction
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {email, address, phone} = req.body;
         const updatedUser: IUser | null = await updateResource(dbConnection, 'User', UserSchema, id, {
             email, address, phone

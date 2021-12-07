@@ -10,7 +10,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function updateTicket(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const id: string = req.params.id;
         const {seatNumbers, to, from, isTicketCancelled} = req.body;
         const updatedTicket: ITicket | null = await updateResource<ITicket>(dbConnection, 'Ticket', TicketSchema, id, {

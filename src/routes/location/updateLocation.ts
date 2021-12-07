@@ -12,7 +12,7 @@ export async function updateLocation(req: Request, res: Response, next: NextFunc
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {streetName, district, state, country, landmark, zipcode} = req.body;
         const updatedLocation: ILocation | null = await updateResource<ILocation>(dbConnection, 'Location', LocationSchema, id, {
             streetName, district, state, country, landmark, zipcode

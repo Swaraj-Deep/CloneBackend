@@ -11,7 +11,7 @@ export async function deleteCompany(req: Request, res: Response, next: NextFunct
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const deletedCompany: ICompany | null = await deleteResource<ICompany>(dbConnection, 'Company', CompanySchema, id);
         if (!deletedCompany) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

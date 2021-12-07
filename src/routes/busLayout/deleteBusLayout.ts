@@ -10,7 +10,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function deleteBusLayout(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const id: string = req.params.id;
         const deletedLayout: IBusLayout | null = await deleteResource<IBusLayout>(dbConnection, 'BusLayout', BusLayoutSchema, id);
         if (!deletedLayout) {

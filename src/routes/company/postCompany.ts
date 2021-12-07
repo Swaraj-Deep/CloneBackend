@@ -11,7 +11,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function postCompany(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {companyName, registrationNumber, gstIN, owner, joinedPlatformOn, rating} = req.body;
         const companyFromUI: ICompany = new Company(companyName, gstIN, joinedPlatformOn, owner, rating, registrationNumber);
         const createdCompany: ICompany = await createResource<ICompany>(dbConnection, 'Company', CompanySchema, companyFromUI);

@@ -11,7 +11,7 @@ export async function getRemainingSeats(req: Request, res: Response, next: NextF
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const remainingSeats: IBus[] = await viewWithFilter<IBus>(dbConnection, 'Bus', BusSchema, {
             _id: id,
         }, {

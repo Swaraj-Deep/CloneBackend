@@ -25,7 +25,7 @@ export async function getSingleBus(req: Request, res: Response, next: NextFuncti
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const bus: IBus | null = await viewSingle<IBus>(dbConnection, 'Bus', BusSchema, id);
         if (!bus) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

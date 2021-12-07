@@ -11,7 +11,7 @@ export async function deleteBus(req: Request, res: Response, next: NextFunction)
     let dbConnection!: Connection;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const deletedBus: IBus | null = await deleteResource(dbConnection, 'Bus', BusSchema, id);
         if (!deletedBus) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

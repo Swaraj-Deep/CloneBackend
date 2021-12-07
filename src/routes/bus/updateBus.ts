@@ -12,7 +12,7 @@ export async function updateBus(req: Request, res: Response, next: NextFunction)
     try {
         const id = req.params.id;
         const {busType, companyId, fare, from, timings, to, totalSeats, remainingSeats} = req.body;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const updatedBus: IBus | null = await updateResource(dbConnection, 'Bus', BusSchema, id, {
             busType, companyId, fare, from, timings, to, totalSeats, remainingSeats
         });

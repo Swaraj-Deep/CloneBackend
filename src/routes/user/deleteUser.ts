@@ -11,7 +11,7 @@ export async function deleteUser(req: Request, res: Response, next: NextFunction
     let dbConnection!: Connection;
     try {
         let id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const deletedUser: IUser | null = await deleteResource(dbConnection, 'User', UserSchema, id);
         if (!deletedUser) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

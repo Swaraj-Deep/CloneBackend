@@ -11,7 +11,7 @@ export async function updateBusLayout(req: Request, res: Response, next: NextFun
     let dbConnection!: Connection;
     try {
         let id: string = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {
             cabinSeats,
             columnArrangement,

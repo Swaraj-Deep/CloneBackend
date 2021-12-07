@@ -11,7 +11,7 @@ import viewSingle from "../../shared/viewSingle";
 export async function getAllBusLayouts(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const busLayouts: IBusLayout[] = await viewAll(dbConnection, 'BusLayout', BusLayoutSchema);
         sendResponse(res, 200, busLayouts);
     } catch (err: any) {
@@ -25,7 +25,7 @@ export async function getSingleBusLayout(req: Request, res: Response, next: Next
     let dbConnection!: Connection;
     try {
         const id: string = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const busLayout: IBusLayout | null = await viewSingle<IBusLayout>(dbConnection, 'BusLayout', BusLayoutSchema, id);
         if (!busLayout) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

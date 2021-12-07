@@ -11,7 +11,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function postTicket(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {userId, busId, seatNumbers, dateOfJourney, timeOfJourney, to, from, isTicketCancelled} = req.body;
         const ticketFromUI: ITicket = new Ticket(busId, dateOfJourney, seatNumbers, timeOfJourney, userId, from, to, isTicketCancelled);
         const createdTicket: ITicket = await createResource<ITicket>(dbConnection, 'Ticket', TicketSchema, ticketFromUI);

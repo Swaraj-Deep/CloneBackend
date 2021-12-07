@@ -11,7 +11,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function postBus(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {busType, companyId, fare, from, timings, to, totalSeats, remainingSeats} = req.body;
         const busFromUI: IBus = new Bus(busType, companyId, fare, from, timings, to, totalSeats, remainingSeats);
         console.log(busFromUI);

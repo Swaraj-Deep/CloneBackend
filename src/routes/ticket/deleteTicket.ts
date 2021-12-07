@@ -11,7 +11,7 @@ export async function deleteTicket(req: Request, res: Response, next: NextFuncti
     let dbConnection!: Connection;
     try {
         let id: string = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const deletedTicket: ITicket | null = await deleteResource<ITicket>(dbConnection, 'Ticket', TicketSchema, id);
         if (!deletedTicket) {
             next(new ErrorHandler(404, `No Resource found with id = ${id}`));

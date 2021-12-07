@@ -11,7 +11,7 @@ import sendResponse from "../../shared/sendResponse";
 export async function postLocation(req: Request, res: Response, next: NextFunction) {
     let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!);
+        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {streetName, district, state, country, landmark, zipcode} = req.body;
         const locationFromUI: ILocation = new Location(country, district, landmark, state, streetName, zipcode);
         const newLocation: ILocation = await createResource<ILocation>(dbConnection, 'Location', LocationSchema, locationFromUI);
