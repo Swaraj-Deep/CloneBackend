@@ -48,7 +48,7 @@ export class Ticket implements ITicket {
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }
-        if (isTicketCancelled) {
+        if (isTicketCancelled !== undefined) {
             this.isTicketCancelled = isTicketCancelled;
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
