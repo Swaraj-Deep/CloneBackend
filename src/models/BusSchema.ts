@@ -29,6 +29,11 @@ const busSchema = new Schema<IBus>({
     remainingSeats: {
         type: "number",
         required: true,
+    },
+    alreadyBookedSeats: {
+        type: ["string"],
+        required: true,
+        default: [],
     }
 });
 

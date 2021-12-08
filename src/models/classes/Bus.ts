@@ -10,8 +10,9 @@ export default class Bus implements IBus {
     to!: string;
     totalSeats!: number;
     remainingSeats!: number;
+    alreadyBookedSeats!: string[];
 
-    constructor(companyId: string, fare: number, from: string, timings: Date[], to: string, totalSeats: number, remainingSeats: number) {
+    constructor(companyId: string, fare: number, from: string, timings: Date[], to: string, totalSeats: number, remainingSeats: number, alreadyBookedSeats: string[]) {
         if (companyId !== undefined) {
             this.companyId = companyId;
         } else {
@@ -56,6 +57,11 @@ export default class Bus implements IBus {
             } catch (err) {
                 throw new ErrorHandler(400, 'Request Body does not match the internal interface');
             }
+        } else {
+            throw new ErrorHandler(400, 'Request Body does not match the internal interface');
+        }
+        if (alreadyBookedSeats !== undefined) {
+            this.alreadyBookedSeats = alreadyBookedSeats;
         } else {
             throw new ErrorHandler(400, 'Request Body does not match the internal interface');
         }

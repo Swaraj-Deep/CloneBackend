@@ -7,4 +7,5 @@ export interface IBus {
     fare: number;
     totalSeats: number;
     remainingSeats: number;
+    alreadyBookedSeats: string[];
 }
