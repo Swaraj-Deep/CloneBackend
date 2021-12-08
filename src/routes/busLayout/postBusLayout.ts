@@ -1,6 +1,4 @@
 import {Request, Response, NextFunction} from "express";
-import {Connection} from "mongoose";
-import connectToDB from "../../database/connectToDB";
 import {BusLayout} from "../../models/classes/BusLayout";
 import {IBusLayout} from "../../models/IBusLayout";
 import createResource from "../../shared/createResource";
@@ -9,9 +7,7 @@ import sendResponse from "../../shared/sendResponse";
 import ErrorHandler from "../../errorHandling/errorHandler";
 
 export async function postBusLayout(req: Request, res: Response, next: NextFunction) {
-    let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {
             cabinSeats,
             columnArrangement,
@@ -22,7 +18,7 @@ export async function postBusLayout(req: Request, res: Response, next: NextFunct
             busType
         } = req.body;
         const busLayoutFromUI = new BusLayout(cabinSeats, columnArrangement, differenceInFare, numberOfRows, seatCountingStrategy, seatingArrangement, busType);
-        const createdBusLayout: IBusLayout = await createResource<IBusLayout>(dbConnection, 'BusLayout', BusLayoutSchema, busLayoutFromUI);
+        const createdBusLayout: IBusLayout = await createResource<IBusLayout>(next, 'BusLayout', BusLayoutSchema, busLayoutFromUI);
         sendResponse(res, 201, createdBusLayout);
     } catch (err: any) {
         if (err instanceof ErrorHandler) {
@@ -30,7 +26,5 @@ export async function postBusLayout(req: Request, res: Response, next: NextFunct
             return;
         }
         next(new ErrorHandler(500, err.message));
-    } finally {
-        await dbConnection.close();
     }
 }

@@ -1,5 +1,3 @@
-import {Connection} from "mongoose";
-import connectToDB from "../../database/connectToDB";
 import {ILocation} from "../../models/ILocation";
 import {Location} from "../../models/classes/Location";
 import LocationSchema from "../../models/LocationSchema";
@@ -8,13 +6,11 @@ import ErrorHandler from "../../errorHandling/errorHandler";
 import {NextFunction, Request, Response} from "express";
 import updateResource from "../../shared/updateResource";
 
-export async function updateLocation(req: Request, res: Response, next: NextFunction) {
-    let dbConnection!: Connection;
+export async function updateLocation(req: Request, res: Response, next: NextFunction) {;
     try {
         const id = req.params.id;
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {streetName, district, state, country, landmark, zipcode} = req.body;
-        const updatedLocation: ILocation | null = await updateResource<ILocation>(dbConnection, 'Location', LocationSchema, id, {
+        const updatedLocation: ILocation | null = await updateResource<ILocation>(next, 'Location', LocationSchema, id, {
             streetName, district, state, country, landmark, zipcode
         });
         if (!updatedLocation) {
@@ -24,7 +20,5 @@ export async function updateLocation(req: Request, res: Response, next: NextFunc
         sendResponse(res, 201, updatedLocation);
     } catch (err: any) {
         next(new ErrorHandler(500, err.message));
-    } finally {
-        await dbConnection.close();
     }
 }

@@ -1,4 +1,3 @@
-import connectToDB from "../database/connectToDB";
 import {ITicket} from "../models/ITicket";
 import {Ticket} from "../models/classes/Ticket";
 import {IBus} from "../models/IBus";
@@ -9,16 +8,13 @@ import updateResource from "../shared/updateResource";
 import createResource from "../shared/createResource";
 import TicketSchema from "../models/TicketSchema";
 import sendResponse from "../shared/sendResponse";
-import {Connection} from "mongoose";
 import {NextFunction, Request, Response} from "express";
 
 export async function bookTickets(req: Request, res: Response, next: NextFunction) {
-    let dbConnection!: Connection;
     try {
-        dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
         const {userId, busId, seatNumbers, dateOfJourney, timeOfJourney, to, from, isTicketCancelled} = req.body;
         const ticketFromUI: ITicket = new Ticket(busId, dateOfJourney, seatNumbers, timeOfJourney, userId, from, to, isTicketCancelled);
-        const buses: IBus[] = await viewWithFilter<IBus>(dbConnection, 'Bus', BusSchema, {
+        const buses: IBus[] = await viewWithFilter<IBus>(next, 'Bus', BusSchema, {
             _id: busId
         });
         if (buses.length == 0) {
@@ -43,18 +39,15 @@ export async function bookTickets(req: Request, res: Response, next: NextFunctio
             const updatedBookedSeats: string[] = [...expectedSeatsToBeBooked, ...alreadyBookedSeats];
             const remainingSeats: number = buses[0].remainingSeats;
             if (remainingSeats >= ticketFromUI.seatNumbers.length) {
-                dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
-                await updateResource<IBus>(dbConnection, 'Bus', BusSchema, busId, {
+                await updateResource<IBus>(next,'Bus', BusSchema, busId, {
                     remainingSeats: remainingSeats - ticketFromUI.seatNumbers.length,
                     alreadyBookedSeats: updatedBookedSeats
                 });
                 try {
-                    dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
-                    const createdTicket: ITicket = await createResource<ITicket>(dbConnection, 'Ticket', TicketSchema, ticketFromUI);
+                    const createdTicket: ITicket = await createResource<ITicket>(next, 'Ticket', TicketSchema, ticketFromUI);
                     sendResponse(res, 201, createdTicket);
                 } catch (err: any) {
-                    dbConnection = connectToDB(process.env.CONNECTION_STRING!, next);
-                    await updateResource<IBus>(dbConnection, 'Bus', BusSchema, busId, {
+                    await updateResource<IBus>(next, 'Bus', BusSchema, busId, {
                         remainingSeats: remainingSeats,
                         alreadyBookedSeats
                     });
@@ -73,7 +66,5 @@ export async function bookTickets(req: Request, res: Response, next: NextFunctio
             return;
         }
         next(new ErrorHandler(500, err.message));
-    } finally {
-        await dbConnection.close();
     }
 }
