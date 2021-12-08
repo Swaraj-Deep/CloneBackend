@@ -5,14 +5,14 @@ export class Ticket implements ITicket {
     _id!: string;
     busId!: string;
     dateOfJourney!: Date;
-    seatNumbers!: number[];
+    seatNumbers!: string[];
     timeOfJourney!: Date;
     userId!: string;
     from!: string;
     to!: string;
     isTicketCancelled!: boolean;
 
-    constructor(busId: string, dateOfJourney: Date, seatNumbers: number[], timeOfJourney: Date, userId: string, from: string, to: string, isTicketCancelled: boolean) {
+    constructor(busId: string, dateOfJourney: Date, seatNumbers: string[], timeOfJourney: Date, userId: string, from: string, to: string, isTicketCancelled: boolean) {
         if (busId !== undefined) {
             this.busId = busId;
         } else {

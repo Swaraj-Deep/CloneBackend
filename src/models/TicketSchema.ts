@@ -11,7 +11,7 @@ const ticketSchema = new Schema<ITicket>({
         required: true
     },
     seatNumbers: {
-        type: ["number"],
+        type: ["string"],
         required: true
     },
     timeOfJourney: {
