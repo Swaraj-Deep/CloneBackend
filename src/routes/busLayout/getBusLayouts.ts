@@ -9,7 +9,7 @@ import viewSingle from "../../shared/viewSingle";
 
 export async function getAllBusLayouts(req: Request, res: Response, next: NextFunction) {
     try {
-        const busLayouts: IBusLayout[] = await viewAll('BusLayout', BusLayoutSchema);
+        const busLayouts: IBusLayout[] = await viewAll(next,'BusLayout', BusLayoutSchema);
         sendResponse(res, 200, busLayouts);
     } catch (err: any) {
         next(new ErrorHandler(500, err.message));
