@@ -9,20 +9,19 @@ import createResource from "../shared/createResource";
 import TicketSchema from "../models/TicketSchema";
 import sendResponse from "../shared/sendResponse";
 import {NextFunction, Request, Response} from "express";
+import viewSingle from "../shared/viewSingle";
 
 export async function bookTickets(req: Request, res: Response, next: NextFunction) {
     try {
         const {userId, busId, seatNumbers, dateOfJourney, timeOfJourney, to, from, isTicketCancelled} = req.body;
         const ticketFromUI: ITicket = new Ticket(busId, dateOfJourney, seatNumbers, timeOfJourney, userId, from, to, isTicketCancelled);
-        const buses: IBus[] = await viewWithFilter<IBus>(next, 'Bus', BusSchema, {
-            _id: busId
-        });
-        if (buses.length == 0) {
+        const bus: IBus | null = await viewSingle<IBus>(next, 'Bus', BusSchema, busId);
+        if (!bus) {
             next(new ErrorHandler(404, `No Resource found with id = ${busId}`));
             return;
         }
         const expectedSeatsToBeBooked: string[] = ticketFromUI.seatNumbers;
-        const alreadyBookedSeats: string[] = buses[0].alreadyBookedSeats;
+        const alreadyBookedSeats: string[] = bus.alreadyBookedSeats;
         let seatFound: boolean = false;
         for (let expectedSeat of expectedSeatsToBeBooked) {
             for (let seat of alreadyBookedSeats) {
@@ -37,9 +36,9 @@ export async function bookTickets(req: Request, res: Response, next: NextFunctio
         }
         if (!seatFound) {
             const updatedBookedSeats: string[] = [...expectedSeatsToBeBooked, ...alreadyBookedSeats];
-            const remainingSeats: number = buses[0].remainingSeats;
+            const remainingSeats: number = bus.remainingSeats;
             if (remainingSeats >= ticketFromUI.seatNumbers.length) {
-                await updateResource<IBus>(next,'Bus', BusSchema, busId, {
+                await updateResource<IBus>(next, 'Bus', BusSchema, busId, {
                     remainingSeats: remainingSeats - ticketFromUI.seatNumbers.length,
                     alreadyBookedSeats: updatedBookedSeats
                 });
